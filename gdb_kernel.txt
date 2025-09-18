@@ -1,0 +1,7 @@
+gdb linux/vmlinux
+(gdb) target remote :1234
+(gdb) hbreak state_store                     # write "mem" to /sys/power/state
+(gdb) hbreak pm_suspend
+(gdb) hbreak suspend_devices_and_enter
+(gdb) c
+

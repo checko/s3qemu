@@ -1,0 +1,5 @@
+chmod +x 10_build_kernel_x86.sh 20_make_rootfs.sh 30_run_qemu_s3.sh
+./10_build_kernel_x86.sh
+./20_make_rootfs.sh
+./30_run_qemu_s3.sh
+
