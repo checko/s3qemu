@@ -21,5 +21,4 @@ echo 'resume_*'     >> $T/set_ftrace_filter
 echo 1 > $T/tracing_on
 echo 1 > /sys/power/pm_print_times 2>/dev/null || true
 
-echo "Configured ftrace. Use ./50_suspend_rtc.sh to test suspend."
-
+echo "Configured ftrace. Use ./suspend_rtc.sh to test suspend."

@@ -1,5 +1,5 @@
 # copy-paste these into the guest shell or mount a 9p share if you prefer
-cat > 40_guest_helpers.sh <<'EOF'; chmod +x 40_guest_helpers.sh; ./40_guest_helpers.sh; EOF
+cat > guest_helper.sh <<'EOF'; chmod +x guest_helper.sh; ./guest_helper.sh; EOF
 #!/bin/sh
 set -e
 cat /sys/power/mem_sleep
@@ -15,10 +15,10 @@ echo 'suspend_*'    >> $T/set_ftrace_filter
 echo 'resume_*'     >> $T/set_ftrace_filter
 echo 1 > $T/tracing_on
 echo 1 > /sys/power/pm_print_times 2>/dev/null || true
-echo "Configured ftrace. Use ./50_suspend_rtc.sh to test suspend."
+echo "Configured ftrace. Use ./suspend_rtc.sh to test suspend."
 EOF
 
-cat > 50_suspend_rtc.sh <<'EOF'; chmod +x 50_suspend_rtc.sh
+cat > suspend_rtc.sh <<'EOF'; chmod +x suspend_rtc.sh
 #!/bin/sh
 set -e
 SEC="${1:-5}"
@@ -34,5 +34,4 @@ grep -E 'suspend_enter|resume_resume|pm_suspend|suspend_devices_and_enter|dpm_' 
 EOF
 
 # now run the test
-./50_suspend_rtc.sh 5
-
+./suspend_rtc.sh 5

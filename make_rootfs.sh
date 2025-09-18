@@ -1,4 +1,4 @@
-:wq#!/usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 BB_VER="${BB_VER:-1.36.1}"
@@ -46,4 +46,3 @@ find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../rootfs.cpio.gz
 popd
 
 echo "Built initramfs: $(realpath rootfs.cpio.gz)"
-
