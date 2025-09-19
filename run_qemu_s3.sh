@@ -23,6 +23,7 @@ GDB_ARGS=()
 [ "$GDB" -eq 1 ] && GDB_ARGS=( -s -S )
 
 qemu-system-x86_64 \
+  -virtfs local,id=s3repo,path="$(pwd)",security_model=none,mount_tag=s3repo,readonly=off \
   -machine "$MACHINE",i8042=on \
   -m 2048 -smp 2 \
   -kernel "$KERNEL" \
