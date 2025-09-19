@@ -39,20 +39,31 @@ This repository documents and automates an end-to-end lab for studying ACPI S3 (
 Once you have a BusyBox shell on the serial console:
 
 - Copy the helper scripts into the guest. Easiest options:
-  - Mount a 9p share that exposes this repository, or
-  - Paste the snippets from `how_to_test.txt`, which use `cat > ... <<'EOF'` to synthesize the scripts inline.
+  - Mount the auto-exported 9p share from the host (set up by `run_qemu_s3.sh`):
+  ```sh
+  mkdir -p /mnt/host
+  mount -t 9p -o trans=virtio s3repo /mnt/host
+  ```
+  Copy any helper scripts you need, then make them executable inside the guest:
+  ```sh
+  cp /mnt/host/guest_helper.sh .
+  cp /mnt/host/suspend_rtc.sh .
+  chmod +x guest_helper.sh suspend_rtc.sh
+  ```
+
+- Alternatively, paste the snippets from `how_to_test.txt`, which use `cat > ... <<'EOF'` to synthesize the scripts inline.
 
 - Run the tracing helper:
   ```sh
   ./guest_helper.sh
   ```
-  This selects the `deep` (S3) sleep state, enables function-graph tracing for PM paths, and enables suspend timing logs.
+  You should see the available sleep states (expect `[s2idle] deep`). The helper switches to `deep`, enables function-graph tracing for PM paths, and turns on suspend timing logs.
 
 - Trigger a suspend/resume cycle driven by the RTC:
   ```sh
   ./suspend_rtc.sh 5
   ```
-  The script arms `rtc0` for a wakeup, writes `mem` to `/sys/power/state`, and copies the trace to `/tmp/pm.trace` for inspection. Pass a different value (e.g. `./suspend_rtc.sh 10`) to change the delay.
+  The script clears any previous wake alarms, arms `rtc0` for the requested delay, writes `mem` to `/sys/power/state`, and copies the trace to `/tmp/pm.trace` for inspection. Pass a different value (e.g. `./suspend_rtc.sh 10`) to change the delay.
 
 ## Debugging Tips
 
