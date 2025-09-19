@@ -11,6 +11,11 @@ This repository documents and automates an end-to-end lab for studying ACPI S3 (
 
 ## Quick Start
 
+0. Install dependencies (requires sudo):
+   ```sh
+   sudo ./install_deps.sh
+   ```
+
 1. Make the helper scripts executable:
    ```sh
    chmod +x build_kernel_x86.sh make_rootfs.sh run_qemu_s3.sh
