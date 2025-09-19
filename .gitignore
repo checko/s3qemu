@@ -1,0 +1,8 @@
+# Build artifacts
+linux/
+busybox-*/
+busybox-*.tar.bz2
+rootfs/
+rootfs.cpio.gz
+*.log
+*.trace

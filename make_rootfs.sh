@@ -16,6 +16,10 @@ pushd busybox-$BB_VER
 make defconfig
 # static is simplest; switch off if you prefer dynamic + musl
 sed -i 's/^# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config
+# drop tc applet to avoid dependency on distro traffic control headers
+sed -i 's/^CONFIG_TC=y/# CONFIG_TC is not set/' .config
+sed -i 's/^CONFIG_FEATURE_TC_INGRESS=y/# CONFIG_FEATURE_TC_INGRESS is not set/' .config
+make oldconfig >/dev/null </dev/null
 make -j"$(nproc)"
 make CONFIG_PREFIX="$ROOTDIR" install
 popd
